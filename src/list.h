@@ -1,8 +1,22 @@
 #ifndef S21_LIST_H_
 #define S21_LIST_H_
 
-#include <iomanip>
+#include <string.h>
+
+#include <algorithm>
+#include <cmath>
+#include <cstddef>
+#include <cstdlib>
+#include <initializer_list>
 #include <iostream>
+#include <iterator>
+#include <limits>
+#include <list>
+#include <memory>
+#include <sstream>
+#include <stdexcept>
+#include <string>
+#include <utility>
 
 namespace s21 {
 template <class T>

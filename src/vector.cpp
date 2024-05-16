@@ -4,84 +4,84 @@ namespace s21 {
 
 template <typename value_type>
 Vector<value_type>::Vector() {
-  array = nullptr;
-  size = 0;
-  capacity = 0;
+  array_ = nullptr;
+  size_ = 0;
+  capacity_ = 0;
 }
 
 template <typename value_type>
 Vector<value_type>::Vector(size_type value) {
   if (value > max_size()) throw std::bad_alloc();
-  size = value;
-  capacity = value;
-  array = reinterpret_cast<value_type*>(new int8_t[value * sizeof(value_type)]);
+  size_ = value;
+  capacity_ = value;
+  array_ = reinterpret_cast<value_type*>(new int8_t[value * sizeof(value_type)]);
   ;
-  for (sizet i = 0; i < value; i++) {
-    array[i] = value_type();
+  for (size_t i = 0; i < value; i++) {
+    array_[i] = value_type();
   }
 }
 
 template <typename value_type>
 Vector<value_type>::Vector(std::initializer_list<value_type> const& items) {
   if (items.size() > max_size()) throw std::bad_alloc();
-  size = items.size();
-  capacity = items.size();
-  array =
-      reinterpret_cast<value_type*>(new int8_t[capacity * sizeof(value_type)]);
-  std::uninitialized_copy(items.begin(), items.end(), array);
+  size_ = items.size();
+  capacity_ = items.size();
+  array_ =
+      reinterpret_cast<value_type*>(new int8_t[capacity_ * sizeof(value_type)]);
+  std::uninitialized_copy(items.begin(), items.end(), array_);
 }
 
 template <typename value_type>
 Vector<value_type>::Vector(const Vector& v) {
-  this->size = v.size;
-  this->capacity = v.capacity;
-  array =
-      reinterpret_cast<value_type*>(new int8_t[capacity * sizeof(value_type)]);
+  this->size_ = v.size_;
+  this->capacity_ = v.capacity_;
+  array_ =
+      reinterpret_cast<value_type*>(new int8_t[capacity_ * sizeof(value_type)]);
   try {
-    std::uninitialized_copy(v.array, v.array + v.size, array);
+    std::uninitialized_copy(v.array_, v.array_ + v.size_, array_);
   } catch (...) {
-    delete[] reinterpret_cast<int8_t*>(array);
+    delete[] reinterpret_cast<int8_t*>(array_);
     throw std::bad_alloc();
   }
 }
 
 template <typename value_type>
 Vector<value_type>::Vector(Vector&& v) noexcept {
-  this->size = v.size;
-  this->capacity = v.capacity;
-  this->array = v.array;
-  v.size = 0;
-  v.capacity = 0;
-  v.array = nullptr;
+  this->size_ = v.size_;
+  this->capacity_ = v.capacity_;
+  this->array_ = v.array_;
+  v.size_ = 0;
+  v.capacity_ = 0;
+  v.array_ = nullptr;
 }
 
 template <typename value_type>
 Vector<value_type>::~Vector() {
   clear();
-  size = 0;
-  capacity = 0;
-  delete[] reinterpret_cast<int8_t*>(array);
-  array = nullptr;
+  size_ = 0;
+  capacity_ = 0;
+  delete[] reinterpret_cast<int8_t*>(array_);
+  array_ = nullptr;
 }
 
 template <typename value_type>
 Vector<value_type>& Vector<value_type>::operator=(Vector&& v) noexcept {
   if (this != &v) {
     this->clear();
-    this->array = v.array;
-    this->size = v.size;
-    this->capacity = v.capacity;
-    v.array = nullptr;
-    v.size = 0;
-    v.capacity = 0;
+    this->array_ = v.array_;
+    this->size_ = v.size_;
+    this->capacity_ = v.capacity_;
+    v.array_ = nullptr;
+    v.size_ = 0;
+    v.capacity_ = 0;
   }
   return *this;
 }
 
 template <typename value_type>
 value_type& Vector<value_type>::at(size_type pos) {
-  if (pos < size) {
-    return array[pos];
+  if (pos < size_) {
+    return array_[pos];
   } else {
     throw std::out_of_range("Index out of range");
   }
@@ -89,121 +89,121 @@ value_type& Vector<value_type>::at(size_type pos) {
 
 template <typename value_type>
 value_type& Vector<value_type>::operator[](size_type pos) {
-  return array[pos];
+  return array_[pos];
 }
 
 template <typename value_type>
 const value_type& Vector<value_type>::front() {
   if (this->empty()) throw std::out_of_range("Index out of range");
-  return array[0];
+  return array_[0];
 }
 
 template <typename value_type>
 const value_type& Vector<value_type>::back() {
   if (this->empty()) throw std::out_of_range("Index out of range");
-  return array[size - 1];
+  return array_[size_ - 1];
 }
 
 template <typename value_type>
 value_type* Vector<value_type>::data() {
-  return array;
+  return array_;
 }
 
 template <typename value_type>
 inline value_type* Vector<value_type>::begin() {
-  return iterator(array);
+  return iterator(array_);
 }
 
 template <typename value_type>
 inline value_type* Vector<value_type>::end() {
-  return iterator(array + size);
+  return iterator(array_ + size_);
 }
 
 template <typename value_type>
 size_t Vector<value_type>::size() {
-  return this->size;
+  return this->size_;
 }
 
 template <typename value_type>
 size_t Vector<value_type>::max_size() {
-  return sizeMAX / sizeof(value_type);
+  return SIZE_MAX / sizeof(value_type);
 }
 
 template <typename value_type>
 size_t Vector<value_type>::capacity() {
-  return this->capacity;
+  return this->capacity_;
 }
 
 template <typename value_type>
 void Vector<value_type>::shrink_to_fit() {
-  if (capacity == size) return;
+  if (capacity_ == size_) return;
   value_type* new_arr =
-      reinterpret_cast<value_type*>(new int8_t[size * sizeof(value_type)]);
+      reinterpret_cast<value_type*>(new int8_t[size_ * sizeof(value_type)]);
   try {
-    std::uninitialized_copy(array, array + size, new_arr);
+    std::uninitialized_copy(array_, array_ + size_, new_arr);
   } catch (...) {
     delete[] reinterpret_cast<int8_t*>(new_arr);
     throw;
   }
-  for (sizet i = 0; i < size; ++i) {
-    (array + i)->~value_type();
+  for (size_t i = 0; i < size_; ++i) {
+    (array_ + i)->~value_type();
   }
-  delete[] reinterpret_cast<int8_t*>(array);
-  array = new_arr;
-  capacity = size;
+  delete[] reinterpret_cast<int8_t*>(array_);
+  array_ = new_arr;
+  capacity_ = size_;
 }
 
 template <typename value_type>
-void Vector<value_type>::reserve(size_type new_capacity) {
-  if (new_capacity <= capacity) return;
-  if (new_capacity > max_size()) throw std::bad_alloc();
+void Vector<value_type>::reserve(size_type new_capacity_) {
+  if (new_capacity_ <= capacity_) return;
+  if (new_capacity_ > max_size()) throw std::bad_alloc();
   value_type* new_arr = reinterpret_cast<value_type*>(
-      new int8_t[new_capacity * sizeof(value_type)]);
+      new int8_t[new_capacity_ * sizeof(value_type)]);
   try {
-    std::uninitialized_copy(array, array + size, new_arr);
+    std::uninitialized_copy(array_, array_ + size_, new_arr);
   } catch (...) {
     delete[] reinterpret_cast<int8_t*>(new_arr);
     throw std::bad_alloc();
   }
 
-  if (array != nullptr) {
-    for (sizet i = 0; i < size; ++i) {
-      if ((array + i) != nullptr) {
-        (array + i)->~value_type();
+  if (array_ != nullptr) {
+    for (size_t i = 0; i < size_; ++i) {
+      if ((array_ + i) != nullptr) {
+        (array_ + i)->~value_type();
       }
     }
-    delete[] reinterpret_cast<int8_t*>(array);
+    delete[] reinterpret_cast<int8_t*>(array_);
   }
-  array = new_arr;
-  capacity = new_capacity;
+  array_ = new_arr;
+  capacity_ = new_capacity_;
 }
 
 template <typename value_type>
-void Vector<value_type>::resize(size_type new_size) {
-  if (new_size > capacity) reserve(new_size);
-  for (sizet i = size; i < new_size; ++i) {
-    new (array + i) value_type();
+void Vector<value_type>::resize(size_type new_size_) {
+  if (new_size_ > capacity_) reserve(new_size_);
+  for (size_t i = size_; i < new_size_; ++i) {
+    new (array_ + i) value_type();
   }
-  size = new_size;
+  size_ = new_size_;
 }
 
 template <typename value_type>
 bool Vector<value_type>::empty() {
-  return (size == 0 ? true : false);
+  return (size_ == 0 ? true : false);
 }
 
 template <typename value_type>
 void Vector<value_type>::clear() {
-  for (sizet i = 0; i < size; ++i) {
-    (array + i)->~value_type();
+  for (size_t i = 0; i < size_; ++i) {
+    (array_ + i)->~value_type();
   }
-  size = 0;
+  size_ = 0;
 }
 
 template <typename value_type>
 typename Vector<value_type>::iterator Vector<value_type>::insert(
     iterator pos, const_reference value) {
-  if (size == 0) {
+  if (size_ == 0) {
     push_back(value);
     return begin();
   }
@@ -212,15 +212,15 @@ typename Vector<value_type>::iterator Vector<value_type>::insert(
     throw std::out_of_range("position is out of range");
   }
 
-  sizet index = pos - this->begin();
-  if (size == capacity) {
-    reserve(capacity == 0 ? 1 : capacity * 2);
+  size_t index = pos - this->begin();
+  if (size_ == capacity_) {
+    reserve(capacity_ == 0 ? 1 : capacity_ * 2);
   }
 
-  resize(size + 1);
+  resize(size_ + 1);
   std::move_backward(this->begin() + index, this->end() - 1, this->end());
   iterator result = this->begin() + index;
-  array[index] = value;
+  array_[index] = value;
   return result;
 }
 
@@ -229,44 +229,44 @@ void Vector<value_type>::erase(iterator pos) {
   for (iterator i = pos; i != end() - 1; ++i) {
     *(i) = *(i + 1);
   }
-  --size;
+  --size_;
 }
 
 template <typename value_type>
 void Vector<value_type>::push_back(const_reference value) {
-  if (capacity == size) {
-    reserve(capacity == 0 ? 1 : capacity * 2);
+  if (capacity_ == size_) {
+    reserve(capacity_ == 0 ? 1 : capacity_ * 2);
   }
   try {
-    new (array + size) value_type(value);
+    new (array_ + size_) value_type(value);
   } catch (...) {
-    (array + size)->~value_type();
+    (array_ + size_)->~value_type();
     throw;
   }
-  size++;
+  size_++;
 }
 
 template <typename value_type>
 void Vector<value_type>::pop_back() {
-  --size;
-  (array + size)->~value_type();
+  --size_;
+  (array_ + size_)->~value_type();
 }
 
 template <typename value_type>
 void Vector<value_type>::swap(Vector<value_type>& other) {
   s21::Vector<value_type> tmp;
-  tmp.array = this->array;
-  tmp.size = this->size;
-  tmp.capacity = this->capacity;
-  this->array = other.array;
-  this->size = other.size;
-  this->capacity = other.capacity;
-  other.array = tmp.array;
-  other.size = tmp.size;
-  other.capacity = tmp.capacity;
-  tmp.array = nullptr;
-  tmp.size = 0;
-  tmp.capacity = 0;
+  tmp.array_ = this->array_;
+  tmp.size_ = this->size_;
+  tmp.capacity_ = this->capacity_;
+  this->array_ = other.array_;
+  this->size_ = other.size_;
+  this->capacity_ = other.capacity_;
+  other.array_ = tmp.array_;
+  other.size_ = tmp.size_;
+  other.capacity_ = tmp.capacity_;
+  tmp.array_ = nullptr;
+  tmp.size_ = 0;
+  tmp.capacity_ = 0;
 }
 
 template <typename value_type>
@@ -288,4 +288,4 @@ void Vector<value_type>::insert_many_back(Args&&... args) {
     push_back(value);
   }
 }
-}
+};

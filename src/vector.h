@@ -1,17 +1,27 @@
 #ifndef S21_VECTOR_H_
 #define S21_VECTOR_H_
 
-#include <iomanip>
+#include <string.h>
+
+#include <algorithm>
+#include <cmath>
+#include <cstddef>
+#include <cstdlib>
+#include <initializer_list>
 #include <iostream>
+#include <iterator>
+#include <limits>
+#include <list>
+#include <memory>
+#include <sstream>
+#include <stdexcept>
+#include <string>
+#include <utility>
 
 namespace s21 {
 template <typename T>
 class Vector
 {
-private:
-    size_t capacity;
-    size_t size;
-    T* array;
 public:
     using value_type = T;
     using iterator = T*;
@@ -68,7 +78,11 @@ public:
                                         
   template <typename... Args>
   void insert_many_back(
-      Args&&... args);  
+      Args&&... args);
+private:
+size_t capacity_;
+size_t size_;
+T* array_;  
 };
 }
 

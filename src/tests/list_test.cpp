@@ -1,10 +1,7 @@
 #include <gtest/gtest.h>
-// #include <list>
-// #include <iterator>
-// #include <queue>
-#include "../list.h"
+#include "../containers.h"
+#include <list>
 
-// using namespace std;
 
 namespace s21 {
 TEST(Suite_List_Constructors, Default_1) {
