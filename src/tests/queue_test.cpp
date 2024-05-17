@@ -1,16 +1,11 @@
-#include <gtest/gtest.h>
-
-#include <queue>
-
 #include "../containers.h"
-
-namespace s21 {
+#include <gtest/gtest.h>
+#include <queue>
 
 TEST(Suite_Queue, Default_Constructor) {
   std::queue<int> std_queue;
   s21::Queue<int> s21_queue;
-  EXPECT_EQ(std_queue.empty(),
-            s21_queue.empty());  // one fake node makes it not emplty
+  EXPECT_EQ(std_queue.empty(), s21_queue.empty());
   EXPECT_EQ(std_queue.size(), s21_queue.size());
 }
 TEST(Suite_Queue, Initializer_ListConstructor) {
@@ -32,7 +27,7 @@ TEST(Suite_Queue, InitializerList_Constructor_Pair) {
   my_queue2.push({"three", 3});
   EXPECT_EQ(my_queue1.empty(), my_queue2.empty());
   EXPECT_EQ(my_queue1.size(), my_queue2.size());
-  while (!my_queue2.empty()) {  // my_queue1 -  always !emptty()
+  while (!my_queue2.empty()) {
     EXPECT_EQ(my_queue1.front().first, my_queue2.front().first);
     EXPECT_EQ(my_queue1.front().second, my_queue2.front().second);
     my_queue1.pop();
@@ -42,9 +37,8 @@ TEST(Suite_Queue, InitializerList_Constructor_Pair) {
 
 TEST(Suite_Queue, Empty_Initializer_ListConstructor) {
   s21::Queue<unsigned int> q{};
-  // ASSERT_TRUE(q.empty());
   ASSERT_EQ(q.size(), 0);
-  ASSERT_TRUE(q.empty());  // there is a fake node
+  ASSERT_TRUE(q.empty());
 }
 
 TEST(Suite_Queue, Copy_InitializerList_Constructor) {
@@ -114,7 +108,7 @@ TEST(Suite_Queue, Push_Pop_Pair) {
   my_queue2.push({"three", 3});
   EXPECT_EQ(q.empty(), my_queue2.empty());
   EXPECT_EQ(q.size(), my_queue2.size());
-  while (!my_queue2.empty()) {  // fake node -> never empty
+  while (!my_queue2.empty()) {
     EXPECT_EQ(q.front().first, my_queue2.front().first);
     EXPECT_EQ(q.front().second, my_queue2.front().second);
     q.pop();
@@ -295,5 +289,4 @@ TEST(Suite_Queue, Move_Assignment_Pair) {
     my_queue2.pop();
     my_queue3.pop();
   }
-}
 }

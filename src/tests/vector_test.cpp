@@ -1,12 +1,6 @@
-#include <gtest/gtest.h>
-
 #include "../containers.h"
-
+#include <gtest/gtest.h>
 #include <vector>
-
-//--------------------------------------------------------------------
-// constructor()
-//--------------------------------------------------------------------
 
 TEST(VectorTest, test_base_constructor_1) {
   s21::Vector<int> v;
@@ -100,9 +94,6 @@ TEST(VectorTest, test_move_constructor_1) {
   EXPECT_EQ(v2[1], 2);
   EXPECT_EQ(v2[2], 3);
 }
-//--------------------------------------------------------------------
-// push_back()
-//--------------------------------------------------------------------
 
 TEST(VectorTest, test_push_back_1) {
   s21::Vector<int> v;
@@ -141,10 +132,6 @@ TEST(VectorTest, test_push_back_5) {
   ASSERT_EQ(v[1], "World");
 }
 
-//--------------------------------------------------------------------
-// pop_back()
-//--------------------------------------------------------------------
-
 TEST(VectorTest, test_pop_back_1) {
   s21::Vector<int> v;
   v.push_back(1);
@@ -177,10 +164,6 @@ TEST(VectorTest, test_pop_back_3) {
   EXPECT_EQ(5, v.size());
   EXPECT_EQ(16, v.capacity());
 }
-
-//--------------------------------------------------------------------
-// begin()
-//--------------------------------------------------------------------
 
 TEST(VectorTest, test_iterator_begin_1_int) {
   s21::Vector<int> v = {1, 2, 3};
@@ -268,9 +251,6 @@ TEST(VectorTest, test_iterator_begin_7) {
   EXPECT_EQ(*it, 2);
 }
 
-//--------------------------------------------------------------------
-// end()
-//--------------------------------------------------------------------
 TEST(VectorTest, test_end_1) {
   s21::Vector<int> v1 = {1, 2, 3};
   EXPECT_EQ(*(v1.end() - 1), 3);
@@ -285,9 +265,7 @@ TEST(VectorTest, test_end_3) {
   s21::Vector<int> v1;
   EXPECT_EQ(v1.end(), v1.begin());
 }
-//--------------------------------------------------------------------
-// swap()
-//--------------------------------------------------------------------
+
 TEST(VectorTest, test_swap_1) {
   s21::Vector<int> v1 = {1, 2, 3};
   s21::Vector<int> v2 = {4, 5, 6};
@@ -303,9 +281,7 @@ TEST(VectorTest, test_swap_1) {
   EXPECT_EQ(v2[1], v1_copy[1]);
   EXPECT_EQ(v2[2], v1_copy[2]);
 }
-//--------------------------------------------------------------------
-// empty()
-//--------------------------------------------------------------------
+
 TEST(VectorTest, test_empty_1) {
   s21::Vector<int> v1;
   EXPECT_TRUE(v1.empty());
@@ -313,9 +289,6 @@ TEST(VectorTest, test_empty_1) {
   EXPECT_FALSE(v1.empty());
 }
 
-//--------------------------------------------------------------------
-// at()
-//--------------------------------------------------------------------
 TEST(VectorTest, test_at_1) {
   s21::Vector<int> v1 = {1, 2, 3};
 
@@ -333,9 +306,6 @@ TEST(VectorTest, test_at_2) {
   EXPECT_THROW(v1.at(2), std::out_of_range);
 }
 
-//--------------------------------------------------------------------
-// operator[]
-//--------------------------------------------------------------------
 TEST(VectorTest, test_operator_1) {
   s21::Vector<int> v1 = {1, 2, 3};
   EXPECT_EQ(v1[0], 1);
@@ -352,10 +322,6 @@ TEST(VectorTest, test_operator_2) {
   v1[1] = "everyone";
   EXPECT_EQ(v1[1], "everyone");
 }
-
-//--------------------------------------------------------------------
-// operator=
-//--------------------------------------------------------------------
 
 TEST(VectorTest, test_operatorEQ_1) {
   s21::Vector<int> v1 = {1, 2, 3};
@@ -392,9 +358,7 @@ TEST(VectorTest, test_operatorEQ_3) {
   EXPECT_EQ(v2.size(), 0);
   EXPECT_TRUE(v2.empty());
 }
-//--------------------------------------------------------------------
-// front()
-//--------------------------------------------------------------------
+
 TEST(VectorTest, test_const_front_1) {
   s21::Vector<int> v1 = {1, 2, 3};
 
@@ -410,9 +374,7 @@ TEST(VectorTest, test_const_front_3) {
   s21::Vector<int> v1;
   EXPECT_THROW(v1.front(), std::out_of_range);
 }
-//--------------------------------------------------------------------
-// back()
-//--------------------------------------------------------------------
+
 TEST(VectorTest, test_const_back_1) {
   s21::Vector<int> v1 = {1, 2, 3};
   EXPECT_EQ(v1.back(), 3);
@@ -428,13 +390,9 @@ TEST(VectorTest, test_const_back_3) {
   EXPECT_THROW(v1.back(), std::out_of_range);
 }
 
-//--------------------------------------------------------------------
-// T* data
-//--------------------------------------------------------------------
-
 TEST(VectorTest, test_data_1) {
   s21::Vector<int> v1 = {1, 2, 3};
-  int* data_ptr = v1.data();
+  int *data_ptr = v1.data();
   EXPECT_NE(data_ptr, nullptr);
   EXPECT_EQ(*data_ptr, 1);
   *data_ptr = 42;
@@ -443,7 +401,7 @@ TEST(VectorTest, test_data_1) {
 
 TEST(VectorTest, test_data_2) {
   s21::Vector<std::string> v1 = {"Hello", "world", "!"};
-  std::string* data_ptr = v1.data();
+  std::string *data_ptr = v1.data();
   EXPECT_NE(data_ptr, nullptr);
   EXPECT_EQ(*data_ptr, "Hello");
   *data_ptr = "Hi";
@@ -452,12 +410,10 @@ TEST(VectorTest, test_data_2) {
 
 TEST(VectorTest, test_data_3) {
   s21::Vector<int> v1;
-  int* data_ptr = v1.data();
+  int *data_ptr = v1.data();
   EXPECT_EQ(data_ptr, nullptr);
 }
-//--------------------------------------------------------------------
-// size()
-//--------------------------------------------------------------------
+
 TEST(VectorTest, test_size_1) {
   s21::Vector<int> v1 = {1, 2, 3};
   EXPECT_EQ(v1.size(), 3);
@@ -477,9 +433,6 @@ TEST(VectorTest, test_size_3) {
   EXPECT_EQ(v1.size(), 0);
 }
 
-//--------------------------------------------------------------------
-// max_size()
-//--------------------------------------------------------------------
 TEST(VectorTest, test_max_size_1) {
   s21::Vector<int> v;
   EXPECT_GE(v.max_size(), v.size());
@@ -495,9 +448,6 @@ TEST(VectorTest, test_max_size_3) {
   EXPECT_GE(v.max_size(), v.size());
 }
 
-//--------------------------------------------------------------------
-// reserve()
-//--------------------------------------------------------------------
 TEST(VectorTest, test_reserve_1) {
   s21::Vector<int> v1 = {1, 2, 3};
   v1.reserve(10);
@@ -534,9 +484,7 @@ TEST(VectorTest, test_reserve_4) {
   EXPECT_EQ(v1.size(), 3);
   EXPECT_EQ(v1.capacity(), 4);
 }
-//--------------------------------------------------------------------
-// shrink_to_fit()
-//--------------------------------------------------------------------
+
 TEST(VectorTest, test_shrink_to_fit_1) {
   s21::Vector<int> v = {1, 2, 3};
   v.push_back(4);
@@ -562,9 +510,7 @@ TEST(VectorTest, test_shrink_to_fit_3) {
   EXPECT_EQ(v.size(), 3);
   EXPECT_EQ(v.capacity(), 3);
 }
-//--------------------------------------------------------------------
-// capacity()
-//--------------------------------------------------------------------
+
 TEST(VectorTest, test_capacity_1) {
   s21::Vector<int> v1 = {1, 2, 3};
   EXPECT_GE(v1.capacity(), 3);
@@ -584,9 +530,6 @@ TEST(VectorTest, test_capacity_3) {
   EXPECT_GE(v1.capacity(), 0);
 }
 
-//--------------------------------------------------------------------
-// clear()
-//--------------------------------------------------------------------
 TEST(VectorTest, test_clear_1) {
   s21::Vector<int> v1 = {1, 2, 3};
   v1.clear();
@@ -605,9 +548,6 @@ TEST(VectorTest, test_clear_3) {
   EXPECT_TRUE(v1.empty());
 }
 
-//--------------------------------------------------------------------
-// erase()
-//--------------------------------------------------------------------
 TEST(VectorTest, test_erase_1) {
   s21::Vector<int> v = {1, 2, 3, 4, 5};
   auto it = v.begin() + 2;
@@ -630,9 +570,7 @@ TEST(VectorTest, test_erase_2) {
   ASSERT_EQ(v[1], 4);
   ASSERT_EQ(v[2], 5);
 }
-//--------------------------------------------------------------------
-// insert()
-//--------------------------------------------------------------------
+
 TEST(VectorTest, test_insert_1) {
   s21::Vector<int> v = {1, 2, 3};
   auto it = v.insert(v.begin(), 4);
@@ -702,9 +640,7 @@ TEST(VectorTest, test_insert_5) {
   v.insert(v.begin(), 0);
   EXPECT_EQ(v[0], 0);
 }
-//--------------------------------------------------------------------
-// insert_many_back()
-//--------------------------------------------------------------------
+
 TEST(VectorTest, test_emplace_back_1) {
   s21::Vector<int> vec = {1, 2, 3};
   vec.insert_many_back(4, 5, 6);
@@ -726,9 +662,6 @@ TEST(VectorTest, test_emplace_back_2) {
   }
 }
 
-//--------------------------------------------------------------------
-// insert_many()
-//--------------------------------------------------------------------
 TEST(VectorTest, test_emplace_1) {
   s21::Vector<int> v{1, 2, 3, 4, 5};
   auto it = v.insert_many(v.begin() + 2, 6);
@@ -803,7 +736,7 @@ TEST(VectorTest, test_emplace_8) {
   EXPECT_EQ(v[7], "world");
 }
 
-int main(int argc, char** argv) {
+int main(int argc, char **argv) {
   testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 }

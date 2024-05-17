@@ -2,18 +2,16 @@
 
 namespace s21 {
 
-template <typename value_type>
-List<value_type>::List() {
+template <typename value_type> List<value_type>::List() {
   tail = new Node<value_type>();
   head = tail;
   Size = 0;
 }
-template <typename value_type>
-List<value_type>::List(const List& l) : List() {
+template <typename value_type> List<value_type>::List(const List &l) : List() {
   operator=(l);
 }
 template <typename value_type>
-List<value_type>::List(List&& l) noexcept : List() {
+List<value_type>::List(List &&l) noexcept : List() {
   clear();
   head = l.head;
   tail = l.tail;
@@ -23,26 +21,24 @@ List<value_type>::List(List&& l) noexcept : List() {
   l.Size = 0;
 }
 template <typename value_type>
-List<value_type>::List(std::initializer_list<value_type> const& items)
+List<value_type>::List(std::initializer_list<value_type> const &items)
     : List() {
-  for (const auto& element : items) {
+  for (const auto &element : items) {
     push_back(element);
   }
 }
-template <typename value_type>
-List<value_type>::List(size_type n) : List() {
+template <typename value_type> List<value_type>::List(size_type n) : List() {
   for (size_type i = 0; i < n; i++) {
     push_back(value_type());
   }
 }
 
-template <typename value_type>
-List<value_type>::~List() {
+template <typename value_type> List<value_type>::~List() {
   clear();
   delete tail;
 }
 template <typename value_type>
-List<value_type>& List<value_type>::operator=(const List& l) {
+List<value_type> &List<value_type>::operator=(const List &l) {
   clear();
   iterator currentPtr = l.begin();
   while (currentPtr != l.end()) {
@@ -53,7 +49,7 @@ List<value_type>& List<value_type>::operator=(const List& l) {
 }
 
 template <typename value_type>
-List<value_type>& List<value_type>::operator=(List&& l) noexcept {
+List<value_type> &List<value_type>::operator=(List &&l) noexcept {
   clear();
   iterator currentPtr = l.begin();
   while (currentPtr != l.end()) {
@@ -65,7 +61,7 @@ List<value_type>& List<value_type>::operator=(List&& l) noexcept {
   return *this;
 }
 template <typename value_type>
-List<value_type>& List<value_type>::operator+(const List& l) {
+List<value_type> &List<value_type>::operator+(const List &l) {
   // 1) get access to the list "l"
   iterator temp = l.begin();
   // 2) add nodes temp to the l list
@@ -75,9 +71,8 @@ List<value_type>& List<value_type>::operator+(const List& l) {
   }
   return *this;
 }
-template <typename value_type>
-void List<value_type>::print() {
-  for (Node<value_type>* node = head; node != tail; node = node->pNext) {
+template <typename value_type> void List<value_type>::print() {
+  for (Node<value_type> *node = head; node != tail; node = node->pNext) {
     std::cout << node->data << " ";
   }
   std::cout << std::endl;
@@ -98,8 +93,7 @@ template <typename value_type>
 typename List<value_type>::iterator List<value_type>::end() const {
   return iterator(this->tail);
 }
-template <typename value_type>
-bool List<value_type>::empty() {
+template <typename value_type> bool List<value_type>::empty() {
   return size() == 0;
 }
 template <typename value_type>
@@ -110,13 +104,13 @@ template <typename value_type>
 typename List<value_type>::size_type List<value_type>::max_size() {
   return allocator.max_size();
 }
-template <typename value_type>
-void List<value_type>::clear() {
-  while (Size) pop_front();
+template <typename value_type> void List<value_type>::clear() {
+  while (Size)
+    pop_front();
 }
 template <typename value_type>
 void List<value_type>::push_back(const_reference data) {
-  Node<value_type>* ptr = new Node<value_type>(data);
+  Node<value_type> *ptr = new Node<value_type>(data);
   ptr->pNext = tail;
   if (Size != 0) {
     tail->pPrev->pNext = ptr;
@@ -130,7 +124,7 @@ void List<value_type>::push_back(const_reference data) {
 }
 template <typename value_type>
 void List<value_type>::push_front(const_reference data) {
-  Node<value_type>* ptr = new Node<value_type>(data);
+  Node<value_type> *ptr = new Node<value_type>(data);
   ptr->pNext = head;
   if (head != NULL) {
     head->pPrev = ptr;
@@ -144,9 +138,8 @@ void List<value_type>::push_front(const_reference data) {
   ptr->pPrev = NULL;
   Size++;
 }
-template <typename value_type>
-void List<value_type>::pop_back() {
-  Node<value_type>* ptr = tail->pPrev;
+template <typename value_type> void List<value_type>::pop_back() {
+  Node<value_type> *ptr = tail->pPrev;
   if (ptr == nullptr) {
     return;
   } else if (Size == 1) {
@@ -160,11 +153,11 @@ void List<value_type>::pop_back() {
   delete ptr;
   Size--;
 }
-template <typename value_type>
-void List<value_type>::pop_front() {
+template <typename value_type> void List<value_type>::pop_front() {
   {
-    if (head == NULL) return;
-    Node<value_type>* ptr = head->pNext;
+    if (head == NULL)
+      return;
+    Node<value_type> *ptr = head->pNext;
     if (ptr != NULL) {
       ptr->pPrev = NULL;
     } else {
@@ -175,16 +168,14 @@ void List<value_type>::pop_front() {
     Size--;
   }
 }
-template <typename value_type>
-void List<value_type>::Swap(List& l) {
+template <typename value_type> void List<value_type>::Swap(List &l) {
   std::swap(this->head, l.head);
   std::swap(this->tail, l.tail);
   std::swap(this->Size, l.Size);
 }
-template <typename value_type>
-void List<value_type>::reverse() {
-  Node<value_type>* currentNode = head;
-  Node<value_type>* nextNode;
+template <typename value_type> void List<value_type>::reverse() {
+  Node<value_type> *currentNode = head;
+  Node<value_type> *nextNode;
   if (head == nullptr) {
     return;
   } else {
@@ -201,17 +192,17 @@ void List<value_type>::reverse() {
   }
 }
 
-template <typename value_type>
-void List<value_type>::Merge(List& other) {
+template <typename value_type> void List<value_type>::Merge(List &other) {
   this->operator+(other);
   this->Sort();
 }
 template <typename value_type>
-void List<value_type>::Splice(iterator pos, List<value_type>& other) {
-  if (!other.head || !other.tail->pPrev) return;  // if other.empty()
+void List<value_type>::Splice(iterator pos, List<value_type> &other) {
+  if (!other.head || !other.tail->pPrev)
+    return; // if other.empty()
 
-  Node<value_type>* startNode = other.head;
-  Node<value_type>* endNode = other.tail->pPrev;
+  Node<value_type> *startNode = other.head;
+  Node<value_type> *endNode = other.tail->pPrev;
   startNode->pPrev = pos.getIterPointer()->pPrev;
   endNode->pNext = pos.getIterPointer();
   if (pos.getIterPointer()->pPrev != nullptr) {
@@ -225,60 +216,59 @@ void List<value_type>::Splice(iterator pos, List<value_type>& other) {
   other.head = nullptr;
   other.tail = nullptr;
 }
-template <typename value_type>
-void List<value_type>::unique() {
+template <typename value_type> void List<value_type>::unique() {
   if (head == nullptr) {
     return;
   }
   // this->Sort();
-  Node<value_type>* currentNode = head;
+  Node<value_type> *currentNode = head;
   while (currentNode != nullptr) {
-    Node<value_type>* nextNode = currentNode->pNext;
+    Node<value_type> *nextNode = currentNode->pNext;
     while (nextNode != nullptr && nextNode->data == currentNode->data) {
-      Node<value_type>* temp = nextNode;
+      Node<value_type> *temp = nextNode;
       nextNode = nextNode->pNext;
-      if (nextNode != nullptr) nextNode->pPrev = currentNode;
+      if (nextNode != nullptr)
+        nextNode->pPrev = currentNode;
       delete temp;
       Size--;
     }
     currentNode->pNext = nextNode;
-    if (nextNode != nullptr) nextNode->pPrev = currentNode;
+    if (nextNode != nullptr)
+      nextNode->pPrev = currentNode;
     currentNode = nextNode;
   }
 }
-template <typename value_type>
-void List<value_type>::Sort() {
-  bool SwapDone = true;  //  activated when swapped, default: on
-  Node<value_type>* currNode;
-  if (head == NULL)  // if list is empty, exit
+template <typename value_type> void List<value_type>::Sort() {
+  bool SwapDone = true; //  activated when swapped, default: on
+  Node<value_type> *currNode;
+  if (head == NULL) // if list is empty, exit
   {
     return;
   }
   while (SwapDone) {
-    currNode = head;   // we start from head
-    SwapDone = false;  // reset for each iteration
+    currNode = head;  // we start from head
+    SwapDone = false; // reset for each iteration
     while (currNode->pNext != tail) {
       if (currNode->data >
-          currNode->pNext->data) {  // if the next element is less
+          currNode->pNext->data) { // if the next element is less
         value_type temp = currNode->data;
         currNode->data = currNode->pNext->data;
         currNode->pNext->data = temp;
-        SwapDone = true;  //  the swap is done and switch the flag
+        SwapDone = true; //  the swap is done and switch the flag
       }
-      currNode = currNode->pNext;  // move next
+      currNode = currNode->pNext; // move next
     }
-    tail->pPrev = currNode;  //  mark the last swapped node
+    tail->pPrev = currNode; //  mark the last swapped node
   }
 }
-template <typename value_type>
-void List<value_type>::initializeFields() {
+template <typename value_type> void List<value_type>::initializeFields() {
   Size = 0;
   head = nullptr;
   tail = nullptr;
 }
 template <typename value_type>
 void List<value_type>::insert(iterator pos, const_reference data) {
-  Node<value_type>* newNode = new Node<value_type>(data);
+  Node<value_type> *newNode = new Node<value_type>(data);
   iterator posNode = pos.IterPointer_;
   if (posNode != begin()) {
     newNode->pPrev = posNode.getIterPointer()->pPrev;
@@ -292,8 +282,7 @@ void List<value_type>::insert(iterator pos, const_reference data) {
   }
   ++Size;
 }
-template <typename value_type>
-void List<value_type>::erase(iterator pos) {
+template <typename value_type> void List<value_type>::erase(iterator pos) {
   if (pos == end()) {
     return;
   }
@@ -313,10 +302,10 @@ void List<value_type>::erase(iterator pos) {
 
 template <typename value_type>
 template <typename... Args>
-typename List<value_type>::iterator List<value_type>::insert_many(
-    iterator pos, Args&&... args) {
-  Node<value_type>* nodeIn = pos.IterPointer_;
-  Node<value_type>* newNode = new Node<value_type>(std::forward<Args>(args)...);
+typename List<value_type>::iterator
+List<value_type>::insert_many(iterator pos, Args &&... args) {
+  Node<value_type> *nodeIn = pos.IterPointer_;
+  Node<value_type> *newNode = new Node<value_type>(std::forward<Args>(args)...);
   newNode->pPrev = nodeIn->pPrev;
   newNode->pNext = nodeIn;
   if (nodeIn->pPrev) {
@@ -330,16 +319,16 @@ typename List<value_type>::iterator List<value_type>::insert_many(
 }
 template <typename value_type>
 template <typename... Args>
-void List<value_type>::insert_many_back(Args&&... args) {
+void List<value_type>::insert_many_back(Args &&... args) {
   for (auto newData : {std::forward<Args>(args)...}) {
     push_back(newData);
   }
 }
 template <typename value_type>
 template <typename... Args>
-void List<value_type>::insert_many_front(Args&&... args) {
+void List<value_type>::insert_many_front(Args &&... args) {
   for (auto newData : {std::forward<Args>(args)...}) {
     push_front(newData);
   }
 }
-}
+} // namespace s21

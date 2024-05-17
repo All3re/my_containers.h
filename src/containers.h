@@ -1,10 +1,12 @@
-#ifndef S21_CONTAINERS_H
-#define S21_CONTAINERS_H
+#ifndef CONTAINERS_H
+#define CONTAINERS_H
 
-#include "queue.h"
-#include "list.h"
-#include "vector.h"
+#include "array.cpp"
+#include "array.h"
 #include "list.cpp"
+#include "list.h"
+#include "queue.h"
 #include "vector.cpp"
+#include "vector.h"
 
 #endif

@@ -1,9 +1,7 @@
-#include <gtest/gtest.h>
 #include "../containers.h"
+#include <gtest/gtest.h>
 #include <list>
 
-
-namespace s21 {
 TEST(Suite_List_Constructors, Default_1) {
   s21::List<double> l;
   EXPECT_EQ(0, l.size());
@@ -198,8 +196,8 @@ TEST(Suite_List_Iterators, End) {
 TEST(Suite_List_modifier, insert_0) {
   std::list<int> l1 = {1, 2, 3, 4, 5};
   s21::List<int> l2 = {1, 2, 3, 4, 5};
-  auto iter1 = l1.begin();  //++
-  auto iter2 = l2.begin();  //++
+  auto iter1 = l1.begin(); //++
+  auto iter2 = l2.begin(); //++
   l1.insert(iter1, 11);
   l2.insert(iter2, 11);
   EXPECT_EQ(l1.front(), l2.front());
@@ -208,8 +206,8 @@ TEST(Suite_List_modifier, insert_0) {
 TEST(Suite_List_modifier, insert_1) {
   std::list<int> l1 = {1, 2, 3, 4, 5};
   s21::List<int> l2 = {1, 2, 3, 4, 5};
-  auto iter1 = ++l1.begin();  //++
-  auto iter2 = ++l2.begin();  //++
+  auto iter1 = ++l1.begin(); //++
+  auto iter2 = ++l2.begin(); //++
   l1.insert(iter1, 11);
   l2.insert(iter2, 11);
   EXPECT_EQ(l1.front(), l2.front());
@@ -345,7 +343,7 @@ TEST(Suite_List_modifier, List_modifier_unique_3_Test) {
 }
 
 TEST(Suite_List_modifier, EmplaceBack) {
-  List<int> list;
+  s21::List<int> list;
   list.insert_many_back(1);
   list.insert_many_back(2);
   list.insert_many_back(3);
@@ -361,7 +359,7 @@ TEST(Suite_List_modifier, EmplaceBack) {
 }
 
 TEST(Suite_List_modifier, EmplaceFront) {
-  List<int> list;
+  s21::List<int> list;
 
   list.insert_many_front(1);
   list.insert_many_front(2);
@@ -376,16 +374,9 @@ TEST(Suite_List_modifier, EmplaceFront) {
   ++iter;
   EXPECT_EQ(*iter, 1);
 }
-// TEST(Suite_ListTest, MaxSize) {
-//   List<int> list;
-//   const auto max_size = list.max_size();
-//   EXPECT_GT(max_size, 0U);
-//   EXPECT_GT(max_size, list.size());
-//   EXPECT_LT(max_size, std::numeric_limits<List<int>::size_type>::max());
-// }
 
 TEST(Suite_ListTest, Emplace) {
-  List<int> list;
+  s21::List<int> list;
 
   list.insert_many_back(1);
   list.insert_many_back(2);
@@ -402,7 +393,7 @@ TEST(Suite_ListTest, Emplace) {
 }
 
 TEST(Suite_ListTest, EmplaceInt) {
-  List<int> list = {1, 2, 3};
+  s21::List<int> list = {1, 2, 3};
   auto iter = list.begin();
   ++iter;
   auto it = list.insert_many(iter, 4);
@@ -410,6 +401,4 @@ TEST(Suite_ListTest, EmplaceInt) {
   EXPECT_EQ(list.size(), 4U);
   EXPECT_EQ(list.front(), 1);
   EXPECT_EQ(list.back(), 3);
-}
-
 }

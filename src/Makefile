@@ -1,13 +1,13 @@
 CC=g++
 CFLAGS=-Wall -Werror -Wextra -g -lstdc++ -std=c++17
 GTEST=-lgtest -lgtest_main -pthread
-COVER=-fprofile-arcs -ftest-coverage
+COVER=-coverage
 
 # # # # # ----------------------------------------------------------
 all: test
 
 test: clean
-	g++ $(CFLAGS) $(COVER) ./tests/vector_test.cpp ./tests/list_test.cpp ./tests/queue_test.cpp -o test $(GTEST)
+	g++ $(CFLAGS) $(COVER) ./tests/vector_test.cpp ./tests/list_test.cpp ./tests/queue_test.cpp ./tests/array_test.cpp -o test $(GTEST)
 	./test
 
 gcov_report: test
@@ -17,7 +17,7 @@ gcov_report: test
 
 
 clean:
-	rm -rf build/ test
+	rm -rf test
 	rm -rf *.a *.o *.out
 	rm -rf *.info *.gcda *.gcno *.gcov *.gch *.dSYM *.html
 	rm -rf coverage
